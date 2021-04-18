@@ -1,5 +1,10 @@
+import os
+
 from django.db import models
 from django.contrib.auth.models import User
+
+from django.dispatch import receiver
+
 # Estilo de Obra
 class ScoreGenre(models.Model):
     
@@ -179,25 +184,46 @@ class Composer(models.Model):
 
     def __str__(self):
 
-        return '%s (%s)' % (self.name, self.surname)
+        return '%s %s' % (self.name, self.surname)
     
     class Meta:
         verbose_name = "Compositor"
         verbose_name_plural = "Compositores"
+# Eliminar la foto al borrar el compositor
+@receiver(models.signals.post_delete, sender=Composer)
+def auto_delete_photo_on_delete(sender, instance, **kwargs):
+    if instance.photo:
+        if os.path.isfile(instance.photo.path):
+            os.remove(instance.photo.path)
+
+# Eliminar foto antigua al modificar el compositor
+@receiver(models.signals.pre_save, sender=Composer)
+def auto_delete_file_on_change(sender, instance, **kwargs):
+    if not instance.pk:
+        return False
+    try:
+        old_file = Composer.objects.get(pk=instance.pk).photo
+    except Composer.DoesNotExist:
+        return False
+
+    new_file = instance.photo
+    if not old_file == new_file:
+        if os.path.isfile(old_file.path):
+            os.remove(old_file.path)
 
 # Video
-class Video(models.Model):
+class VideoMedia(models.Model):
 
     url = models.CharField(max_length=200,
-        help_text="Ingrese la url del de Youtube del vídeo")
+        help_text="Ingrese la url de Youtube del vídeo")
 
     def __str__(self):
 
         return self.url
     
     class Meta:
-        verbose_name = "Vídeo"
-        verbose_name_plural = "Vídeos"
+        verbose_name = "Grabación de Vídeo"
+        verbose_name_plural = "Grabaciones de Vídeo"
 
 # Obra Musical
 class Score(models.Model):
@@ -225,7 +251,7 @@ class Score(models.Model):
     mp3 = models.FileField(upload_to="audio",
         null=True,
         blank=True)
-    video = models.ManyToManyField(Video,
+    video = models.ManyToManyField(VideoMedia,
         related_name='scores',
         help_text="Seleccione el Vídeo",
         blank=True)
@@ -259,7 +285,29 @@ class Sheet(models.Model):
     class Meta:
         verbose_name = "Partitura"
         verbose_name_plural = "Partituras"
-    
+
+# Eliminar el archivo al borrar la partitura
+@receiver(models.signals.post_delete, sender=Sheet)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    if instance.pdf:
+        if os.path.isfile(instance.pdf.path):
+            os.remove(instance.pdf.path)
+
+# Eliminar archivo antiguo al modificar la partitura
+@receiver(models.signals.pre_save, sender=Sheet)
+def auto_delete_file_on_change(sender, instance, **kwargs):
+    if not instance.pk:
+        return False
+    try:
+        old_file = Sheet.objects.get(pk=instance.pk).pdf
+    except Sheet.DoesNotExist:
+        return False
+
+    new_file = instance.pdf
+    if not old_file == new_file:
+        if os.path.isfile(old_file.path):
+            os.remove(old_file.path)
+
 # Musico
 class Musician(models.Model):
 
@@ -359,7 +407,7 @@ class Event(models.Model):
         help_text="Asigne musicos al evento",
         verbose_name="Músicos",
         blank=True)
-    videos = models.ManyToManyField(Video,
+    videos = models.ManyToManyField(VideoMedia,
         related_name='events',
         help_text="Añada vídeos del evento",
         verbose_name="Videos",
