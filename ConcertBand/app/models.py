@@ -326,8 +326,13 @@ class Musician(models.Model):
         blank=True)
 
     def __str__(self):
-
-        return self.user
+        if self.user.first_name:
+            if self.user.last_name:
+                return '%s %s' % (self.user.first_name, self.user.last_name)
+            else:
+                return '%s' % (self.user.first_name)
+        else:
+            return '%s' % (self.user.username)
 
     class Meta:
         verbose_name = "Músico"
