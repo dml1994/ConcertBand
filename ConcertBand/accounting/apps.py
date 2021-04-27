@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class AppConfig(AppConfig):
+class AccountingConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'app'
-    verbose_name = 'Banda de Música'
+    name = 'accounting'
+    verbose_name = 'Contabilidad'
