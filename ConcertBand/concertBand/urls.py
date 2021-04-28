@@ -18,6 +18,7 @@ from django.urls import path
 from app import views
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf.urls import include
 
 urlpatterns = [
     path('',views.index, name='index'),
@@ -25,6 +26,11 @@ urlpatterns = [
 ]
 
 urlpatterns += staticfiles_urlpatterns()
+
+# Authentication
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),    
+]
 if settings.DEBUG:
     from django.conf.urls.static import static
     urlpatterns += static(settings.MEDIA_URL,

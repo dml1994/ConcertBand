@@ -1,0 +1,48 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+<p>Tu usuario y contraseña no coinciden. Prueba de nuevo.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+<section class="page-section" id="contact">
+    <div class="container">
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">inicio de Sesión</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+        <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+
+        <div>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+        </div>
+        <div>
+        <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password }}</td>
+        </div>
+
+        <div>
+        <input type="submit" value="login" />
+        <input type="hidden" name="next" value="{{ next }}" />
+        </div>
+        </form>
+    </div>
+</section>
+{# Assumes you setup the password_reset view in your URLconf #}
+<p><a href="{% url 'password_reset' %}">¿Has olvidado tu contraseña?</a></p>
+
+{% endblock %}
