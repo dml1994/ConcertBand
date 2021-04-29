@@ -19,13 +19,16 @@ before_install:
 
 install:
   - pip install -r requirements.txt
+  - pip3 install coverage
   - pip install codacy-coverage
 
 script:
   - cd ConcertBand
-  - python ./manage.py makemigrations
+  - python ./manage.py makemigrations registry
+  - python ./manage.py makemigrations accounting
+  - python ./manage.py makemigrations app
   - python ./manage.py migrate
-  - coverage run --branch --source=. ./manage.py test accounting app registry --keepdb --with-xunit
+  - coverage run --branch --source=. ./manage.py test accounting app registry --keepdb 
   - coverage xml
   - python-codacy-coverage -r coverage.xml
 
