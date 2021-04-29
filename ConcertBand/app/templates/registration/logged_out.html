@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<section class="page-section" id="logout">
+    <div class="container">
+        <p>!Has cerrado sesión!</p>
+
+        <a href="{% url 'login'%}">Pulsa aquí para iniciar sesión de nuevo</a>
+    </div>
+</section>
+{% endblock %}

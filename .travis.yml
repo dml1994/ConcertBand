@@ -1,0 +1,36 @@
+services:
+  - postgresql
+
+addons:
+  postgresql:"12.6"
+
+language: python
+
+python:
+  - "3.8.5"
+
+before_install:
+  - psql -U postgres -c "DROP DATABASE IF EXISTS test_concertband"
+  - psql -U postgres -c "create user concertband password 'concertband'"
+  - psql -U postgres -c "create database test_concertband owner concertband"
+  - psql -U postgres -c "ALTER USER concertband CREATEDB"
+  - psql -U postgres -c "create database concertbanddb owner concertband"
+
+
+install:
+  - pip install -r requirements.txt
+  - pip3 install coverage
+  - pip install codacy-coverage
+
+script:
+  - cd ConcertBand
+  - python ./manage.py makemigrations registry
+  - python ./manage.py makemigrations accounting
+  - python ./manage.py makemigrations app
+  - python ./manage.py migrate
+  - coverage run --branch --source=. ./manage.py test accounting app registry --keepdb 
+  - coverage xml
+  - python-codacy-coverage -r coverage.xml
+
+notifications:
+  email: false
