@@ -1,0 +1,33 @@
+services:
+  - postgresql
+
+addons:
+  postgresql:"12.6"
+
+language: python
+
+python:
+  - "3.8.5"
+
+before_install:
+  - psql -U postgres -c "DROP DATABASE IF EXISTS test_concertband"
+  - psql -U postgres -c "create user concertband password 'concertband'"
+  - psql -U postegres -c "create database test_concertband owner concertband"
+  - psql -U postegres -c "ALTER USER concertband CREATEDB"
+  - psql -U postegres -c "create database concertbanddb owner concertband"
+
+
+install:
+  - pip install -r requirements.txt
+  - pip install codavy-coverage
+
+script:
+  - cd ConcertBand
+  - python ./manage.py makemigrations
+  - pyhton ./manage.py migrate
+  - coverage run --branch --source=. ./manage.py test accounting app registry --keepdb --with-xunit
+  - coverage xml
+  - python-codacy-coverage -r coverage.xml
+
+notifications:
+  email: false
