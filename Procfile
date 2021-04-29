@@ -1,1 +1,1 @@
-release: sh -c 'cd ConcertBand && python manage.py migrate'
+web: gunicorn concertBand.wsgi
