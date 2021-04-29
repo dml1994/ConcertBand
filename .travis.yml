@@ -19,7 +19,7 @@ before_install:
 
 install:
   - pip install -r requirements.txt
-  - pip install codavy-coverage
+  - pip install codacy-coverage
 
 script:
   - cd ConcertBand
