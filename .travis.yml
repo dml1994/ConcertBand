@@ -23,8 +23,9 @@ install:
   - pip install codacy-coverage
 
 script:
-  - cd ConcertBand
+  - cd ConcertBand/concertBand
   - cp travis_local_settings.py local_settings.py
+  - cd ..
   - python ./manage.py makemigrations registry
   - python ./manage.py makemigrations accounting
   - python ./manage.py makemigrations app
