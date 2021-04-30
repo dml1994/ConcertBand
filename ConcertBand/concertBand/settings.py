@@ -30,7 +30,7 @@ STATICFILES_DIRS = (
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY='django-insecure-u0w19w7++j&=ch7v9y5igr(9@auwi$*be^g$c^yb**$)pl2#2z'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
@@ -90,11 +90,11 @@ WSGI_APPLICATION = 'concertBand.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'concertbanddb',
-        'USER': 'concertband',
-        'PASSWORD': 'concertband',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': env('POSTGRESQL_NAME'),
+        'USER': env('POSTGRESQL_USER'),
+        'PASSWORD': env('POSTGRESQL_PASS'),
+        'HOST': env('POSTGRESQL_HOST'),
+        'PORT': env('POSTGRESQL_PORT'),
     }
 }
 
@@ -131,22 +131,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-MODULES = [
-    'app',
-    'accounting',
-    'registry',
-]
-
-BASEURL = 'https://concertband.herokuapp.com'
-
-APIS = {
-    'app': BASEURL,
-    'accounting' : BASEURL,
-    'registry' : BASEURL,
-}
-
-import django_heroku
-django_heroku.settings(locals())
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -164,14 +148,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 LOGIN_REDIRECT_URL = '/'
 
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR,'static'),
-)
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+try:
+    from local_settings import *
+except ImportError:
+    print("local_settings.py not found")

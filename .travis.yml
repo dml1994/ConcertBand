@@ -24,11 +24,12 @@ install:
 
 script:
   - cd ConcertBand
+  - cp travis_local_settings.py local_settings.py
   - python ./manage.py makemigrations registry
   - python ./manage.py makemigrations accounting
   - python ./manage.py makemigrations app
   - python ./manage.py migrate
-  - coverage run --branch --source=. ./manage.py test accounting app registry --keepdb 
+  - coverage run --branch --source=. ./manage.py test --keepdb 
   - coverage xml
   - python-codacy-coverage -r coverage.xml
 
