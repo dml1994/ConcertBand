@@ -131,6 +131,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+MODULES = [
+    'app',
+    'accounting',
+    'registry',
+]
+
 BASEURL = 'https://concertband.herokuapp.com'
 
 APIS = {}
