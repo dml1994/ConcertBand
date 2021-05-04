@@ -1,1 +1,1 @@
-web: gunicorn ConcertBand/concertBand.wsgi --log-file -
+web: gunicorn concertBand.wsgi --log-file -
