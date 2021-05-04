@@ -1,2 +1,1 @@
-release: sh -c 'cd ConcertBand %% python manage.py migrate'
-web: sh -c 'cd ConcertBand gunicorn concertBand.wsgi --logfile -'
+web: gunicorn concertBand.wsgi --log-file -
