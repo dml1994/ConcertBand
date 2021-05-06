@@ -158,7 +158,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 LOGIN_REDIRECT_URL = '/'
 
 try:
-    from .local_settings import *
+    from concertBand import local_settings
 except ImportError:
     print("local_settings.py not found")
 
