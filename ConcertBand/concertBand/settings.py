@@ -157,10 +157,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 LOGIN_REDIRECT_URL = '/'
 
-try:
-    from concertBand import local_settings
-except ImportError:
-    print("local_settings.py not found")
 
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url
