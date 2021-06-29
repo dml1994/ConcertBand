@@ -13,7 +13,7 @@ before_install:
   - psql -U postgres -c "DROP DATABASE IF EXISTS test_concertband"
   - psql -U postgres -c "create user concertband password 'concertband'"
   - psql -U postgres -c "create database test_concertband owner concertband"
-  - psql -U postgres -c "ALTER USER concertband CREATEDB"
+  - psql -U postgres -c "ALTER USER concertband Superuser"
   - psql -U postgres -c "create database concertbanddb owner concertband"
 
 
