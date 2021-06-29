@@ -64,3 +64,33 @@ class AccountingTestCase(TestCase):
         self.assertEquals(led.name,"Libro de Cuentas Test 1")
         self.assertEquals(led.initialBalance,1000)
         self.assertEquals(led.currentBalance,500)
+
+        # Comprobación Cadena de Texto
+        self.assertEquals(str(e),str(e.date) + " (Ejercicio Test 1)")
+
+        # Borrado de la Entrada
+        e.delete()
+        self.assertFalse(Entry.objects.filter(concept="Concepto Test 1").exists())
+
+        # Comprobaciones Ejercicio después del borrado
+        p = Period.objects.get(name="Ejercicio Test 1")
+        self.assertEquals(p.name,"Ejercicio Test 1")
+        self.assertEquals(p.initialBalance,1000)
+        self.assertEquals(p.currentBalance,1000)
+        self.assertEquals(p.ledger.name,"Libro de Cuentas Test 1")
+
+        # Comprobaciones Libro de Cuentas después del borrado
+        led = Ledger.objects.get(name="Libro de Cuentas Test 1")
+        self.assertEquals(led.name,"Libro de Cuentas Test 1")
+        self.assertEquals(led.initialBalance,1000)
+        self.assertEquals(led.currentBalance,1000)
+
+    # Test Cadena de Texto Libro de Cuentas
+    def testStrLedger(self):
+        led = Ledger.objects.get(name="Libro de Cuentas Test 1")
+        self.assertEquals(str(led),"Libro de Cuentas Test 1")
+    
+    # Test Cadena de Texto Ejercico
+    def testStrPeriod(self):
+        p = Period.objects.get(name="Ejercicio Test 1")
+        self.assertEquals(str(p),"Ejercicio Test 1 (Libro de Cuentas Test 1)")
