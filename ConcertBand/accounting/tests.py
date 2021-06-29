@@ -1,5 +1,5 @@
 from django.test import TestCase
-from accounting.models import *
+from accounting.models import Ledger, Period, Entry
 
 # Create your tests here.
 
