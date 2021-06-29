@@ -33,6 +33,7 @@ script:
   - coverage run --branch --source=. ./manage.py test --keepdb 
   - coverage xml
   - python-codacy-coverage -r coverage.xml
+  - cp heroku_settings.py settings.py
 
 notifications:
   email: false
@@ -42,3 +43,5 @@ deploy:
   app: concertband
   strategy: git
   api_key: 96557c2f-c881-494c-ac11-84ea4737c866
+  on:
+      branch: develop
