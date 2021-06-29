@@ -34,7 +34,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = env('DEBUG')
-DEBUG = bool( os.environ.get('DJANGO_DEBUG', False) )
+DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
 
 ALLOWED_HOSTS = ['concertband.herokuapp.com','127.0.0.1']
 
@@ -99,11 +99,11 @@ WSGI_APPLICATION = 'concertBand.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'concertband',
-        'USER': 'concertband',
-        'PASSWORD': 'concertband',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': env('POSTGRESQL_NAME'),
+        'USER': env('POSTGRESQL_USER'),
+        'PASSWORD': env('POSTGRESQL_PASS'),
+        'HOST': env('POSTGRESQL_HOST'),
+        'PORT': env('POSTGRESQL_PORT'),
     }
 }
 
@@ -177,9 +177,4 @@ STATIC_URL = '/static/'
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-try:
-    from local_settings import *
-except ImportError:
-    print("local_settings.py not found")
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
