@@ -99,11 +99,11 @@ WSGI_APPLICATION = 'concertBand.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('POSTGRESQL_NAME'),
-        'USER': env('POSTGRESQL_USER'),
-        'PASSWORD': env('POSTGRESQL_PASS'),
-        'HOST': env('POSTGRESQL_HOST'),
-        'PORT': env('POSTGRESQL_PORT'),
+        'NAME': 'concertband',
+        'USER': 'concertband',
+        'PASSWORD': 'concertband',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
