@@ -1,5 +1,5 @@
 from django.db import models
-     
+
 # Libro de Cuentas
 class Ledger(models.Model):
 
