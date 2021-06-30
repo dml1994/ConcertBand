@@ -120,7 +120,7 @@ class AccountingTestCase(TestCase):
     def test_str_ledger(self):
         led = Ledger.objects.get(name="Libro de Cuentas Test 1")
         self.assertEquals(str(led),"Libro de Cuentas Test 1")
-        
+
     # Test Cadena de Texto Ejercico
     def test_str_period(self):
         p = Period.objects.get(name="Ejercicio Test 1")
