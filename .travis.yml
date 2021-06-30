@@ -24,6 +24,7 @@ install:
 
 script:
   - cd ConcertBand/concertBand
+  - cp local_settings.py settings.py
   - cp travis_local_settings.py local_settings.py
   - cd ..
   - python ./manage.py makemigrations registry
@@ -37,10 +38,7 @@ script:
 
 notifications:
   email: false
-before_deploy:
-  - cd concertBand
-  - cp heroku_settings.py settings.py
-  
+
 deploy:
   provider: heroku
   app: concertband
