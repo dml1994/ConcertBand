@@ -33,12 +33,14 @@ script:
   - coverage run --branch --source=. ./manage.py test --keepdb 
   - coverage xml
   - python-codacy-coverage -r coverage.xml
-  - cd concertBand
-  - cp heroku_settings.py settings.py
+  
 
 notifications:
   email: false
-
+before_deploy:
+  - cd concertBand
+  - cp heroku_settings.py settings.py
+  
 deploy:
   provider: heroku
   app: concertband
