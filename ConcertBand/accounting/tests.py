@@ -7,7 +7,7 @@ from accounting.models import Ledger, Period, Entry
 class AccountingTestCase(TestCase):
 
     def setUp(self):
-
+        
         l = Ledger(name="Libro de Cuentas Test 1", initialBalance = 1000)
         
         p = Period(name="Ejercicio Test 1",ledger = l) 
@@ -37,6 +37,24 @@ class AccountingTestCase(TestCase):
         self.assertEquals(p.initialBalance,1000)
         self.assertEquals(p.currentBalance,b)
         self.assertEquals(p.ledger.name,"Libro de Cuentas Test 1")
+
+    def entryTest(self,e):
+        # Comprobación Cadena de Texto
+        self.assertEquals(str(e),str(e.date) + " (Ejercicio Test 1)")
+
+        # Borrado de la Entrada
+        e.delete()
+        self.assertFalse(Entry.objects.filter(concept="Concepto Test 1").exists())
+
+        # Comprobaciones Ejercicio después del borrado
+        p = Period.objects.get(name="Ejercicio Test 1")
+        self.periodTest(p,1000)
+
+        # Comprobaciones Libro de Cuentas después del borrado
+        led = Ledger.objects.get(name="Libro de Cuentas Test 1")
+        self.assertEquals(led.name,"Libro de Cuentas Test 1")
+        self.assertEquals(led.initialBalance,1000)
+        self.assertEquals(led.currentBalance,1000)
 
     # Test de creacion de un Libro de Cuentas
     def test_create_ledger(self):
@@ -72,22 +90,7 @@ class AccountingTestCase(TestCase):
         self.assertEquals(led.initialBalance,1000)
         self.assertEquals(led.currentBalance,500)
 
-        # Comprobación Cadena de Texto
-        self.assertEquals(str(e),str(e.date) + " (Ejercicio Test 1)")
-
-        # Borrado de la Entrada
-        e.delete()
-        self.assertFalse(Entry.objects.filter(concept="Concepto Test 1").exists())
-
-        # Comprobaciones Ejercicio después del borrado
-        p = Period.objects.get(name="Ejercicio Test 1")
-        self.periodTest(p,1000)
-
-        # Comprobaciones Libro de Cuentas después del borrado
-        led = Ledger.objects.get(name="Libro de Cuentas Test 1")
-        self.assertEquals(led.name,"Libro de Cuentas Test 1")
-        self.assertEquals(led.initialBalance,1000)
-        self.assertEquals(led.currentBalance,1000)
+        self.entryTest(e)
 
     # Test de creacion de una Entrada de gasto
     def test_create_no_spending_entry(self):
@@ -111,22 +114,7 @@ class AccountingTestCase(TestCase):
         self.assertEquals(led.initialBalance,1000)
         self.assertEquals(led.currentBalance,1500)
 
-        # Comprobación Cadena de Texto
-        self.assertEquals(str(e),str(e.date) + " (Ejercicio Test 1)")
-
-        # Borrado de la Entrada
-        e.delete()
-        self.assertFalse(Entry.objects.filter(concept="Concepto Test 1").exists())
-
-        # Comprobaciones Ejercicio después del borrado
-        p = Period.objects.get(name="Ejercicio Test 1")
-        self.periodTest(p,1000)
-
-        # Comprobaciones Libro de Cuentas después del borrado
-        led = Ledger.objects.get(name="Libro de Cuentas Test 1")
-        self.assertEquals(led.name,"Libro de Cuentas Test 1")
-        self.assertEquals(led.initialBalance,1000)
-        self.assertEquals(led.currentBalance,1000)
+        self.entryTest(e)
 
     # Test Cadena de Texto Libro de Cuentas
     def test_str_ledger(self):
