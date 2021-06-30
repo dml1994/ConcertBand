@@ -1,7 +1,6 @@
-from django.http import request
 from django.test import TestCase
 from accounting.models import Ledger, Period, Entry
-from accounting.admin import LedgerAdmin, PeriodAdmin, EntryAdmin
+
 
 # Create your tests here.
 
