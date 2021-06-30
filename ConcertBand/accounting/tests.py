@@ -7,10 +7,10 @@ from accounting.models import Ledger, Period, Entry
 class AccountingTestCase(TestCase):
 
     def setUp(self):
-        
+
         l = Ledger(name="Libro de Cuentas Test 1", initialBalance = 1000)
-        
-        p = Period(name="Ejercicio Test 1",ledger = l) 
+
+        p = Period(name="Ejercicio Test 1",ledger = l)
 
         l.save()
 
