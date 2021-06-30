@@ -24,7 +24,6 @@ install:
 
 script:
   - cd ConcertBand/concertBand
-  - cp local_settings.py settings.py
   - cp travis_local_settings.py local_settings.py
   - cd ..
   - python ./manage.py makemigrations registry
