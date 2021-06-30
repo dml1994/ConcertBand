@@ -9,7 +9,7 @@ class AccountingTestCase(TestCase):
     def setUp(self):
 
         l = Ledger(name="Libro de Cuentas Test 1", initialBalance = 1000)
-
+        
         p = Period(name="Ejercicio Test 1",ledger = l) 
 
         l.save()
@@ -32,6 +32,12 @@ class AccountingTestCase(TestCase):
         e = Entry(concept=concept,amount = amount, spending = spending, period = period)
         e.save()
 
+    def periodTest(self,p,b):
+        self.assertEquals(p.name,"Ejercicio Test 1")
+        self.assertEquals(p.initialBalance,1000)
+        self.assertEquals(p.currentBalance,b)
+        self.assertEquals(p.ledger.name,"Libro de Cuentas Test 1")
+
     # Test de creacion de un Libro de Cuentas
     def test_create_ledger(self):
         led = Ledger.objects.get(name="Libro de Cuentas Test 1")
@@ -42,10 +48,7 @@ class AccountingTestCase(TestCase):
     # Test de creacion de un Ejercicio
     def test_create_period(self):
         p = Period.objects.get(name="Ejercicio Test 1")
-        self.assertEquals(p.name,"Ejercicio Test 1")
-        self.assertEquals(p.initialBalance,1000)
-        self.assertEquals(p.currentBalance,1000)
-        self.assertEquals(p.ledger.name,"Libro de Cuentas Test 1")
+        self.periodTest(p,1000)
 
     # Test de creacion de una Entrada de gasto
     def test_create_spending_entry(self):
@@ -61,10 +64,7 @@ class AccountingTestCase(TestCase):
         self.assertEquals(e.amount,500)
 
         # Comprobaciones Ejercicio
-        self.assertEquals(p.name,"Ejercicio Test 1")
-        self.assertEquals(p.initialBalance,1000)
-        self.assertEquals(p.currentBalance,500)
-        self.assertEquals(p.ledger.name,"Libro de Cuentas Test 1")
+        self.periodTest(p,500)
 
         # Comprobaciones Libro de Cuentas
         led = Ledger.objects.get(name="Libro de Cuentas Test 1")
@@ -81,10 +81,7 @@ class AccountingTestCase(TestCase):
 
         # Comprobaciones Ejercicio después del borrado
         p = Period.objects.get(name="Ejercicio Test 1")
-        self.assertEquals(p.name,"Ejercicio Test 1")
-        self.assertEquals(p.initialBalance,1000)
-        self.assertEquals(p.currentBalance,1000)
-        self.assertEquals(p.ledger.name,"Libro de Cuentas Test 1")
+        self.periodTest(p,1000)
 
         # Comprobaciones Libro de Cuentas después del borrado
         led = Ledger.objects.get(name="Libro de Cuentas Test 1")
@@ -106,10 +103,7 @@ class AccountingTestCase(TestCase):
         self.assertEquals(e.amount,500)
 
         # Comprobaciones Ejercicio
-        self.assertEquals(p.name,"Ejercicio Test 1")
-        self.assertEquals(p.initialBalance,1000)
-        self.assertEquals(p.currentBalance,1500)
-        self.assertEquals(p.ledger.name,"Libro de Cuentas Test 1")
+        self.periodTest(p,1500)
 
         # Comprobaciones Libro de Cuentas
         led = Ledger.objects.get(name="Libro de Cuentas Test 1")
@@ -126,10 +120,7 @@ class AccountingTestCase(TestCase):
 
         # Comprobaciones Ejercicio después del borrado
         p = Period.objects.get(name="Ejercicio Test 1")
-        self.assertEquals(p.name,"Ejercicio Test 1")
-        self.assertEquals(p.initialBalance,1000)
-        self.assertEquals(p.currentBalance,1000)
-        self.assertEquals(p.ledger.name,"Libro de Cuentas Test 1")
+        self.periodTest(p,1000)
 
         # Comprobaciones Libro de Cuentas después del borrado
         led = Ledger.objects.get(name="Libro de Cuentas Test 1")
@@ -141,7 +132,7 @@ class AccountingTestCase(TestCase):
     def test_str_ledger(self):
         led = Ledger.objects.get(name="Libro de Cuentas Test 1")
         self.assertEquals(str(led),"Libro de Cuentas Test 1")
-    
+        
     # Test Cadena de Texto Ejercico
     def test_str_period(self):
         p = Period.objects.get(name="Ejercicio Test 1")
