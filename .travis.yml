@@ -37,11 +37,3 @@ script:
 
 notifications:
   email: false
-
-deploy:
-  provider: heroku
-  app: concertband
-  strategy: git
-  api_key: 96557c2f-c881-494c-ac11-84ea4737c866
-  on:
-      branch: develop
