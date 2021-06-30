@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import *
+from .models import Ledger, Entry, Period
 from django.utils.translation import ngettext
 from django.contrib import messages
 

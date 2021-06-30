@@ -1,5 +1,7 @@
+from django.http import request
 from django.test import TestCase
 from accounting.models import Ledger, Period, Entry
+from accounting.admin import LedgerAdmin, PeriodAdmin, EntryAdmin
 
 # Create your tests here.
 
@@ -8,11 +10,13 @@ class AccountingTestCase(TestCase):
     def setUp(self):
 
         l = Ledger(name="Libro de Cuentas Test 1", initialBalance = 1000)
+
         p = Period(name="Ejercicio Test 1",ledger = l) 
-        
 
         l.save()
+
         p.save()
+
         super().setUp()
 
     def tearDown(self):
@@ -21,7 +25,11 @@ class AccountingTestCase(TestCase):
 
         self.l=None
 
-    def createEntry(self, concept,amount,spending,period):
+        self.p=None
+
+
+    @staticmethod
+    def createEntry(concept,amount,spending,period):
         e = Entry(concept=concept,amount = amount, spending = spending, period = period)
         e.save()
 
