@@ -1,0 +1,59 @@
+{% extends "base_generic.html" %}
+
+{% load static %}
+
+{% block content %}
+    <header class="masthead bg-primary text-white text-center">
+        <div class="d-flex align-items-center flex-column">
+            <p class="masthead-subheading font-weight-light">Eventos</p>
+        </div>
+        <div class="d-flex align-items-center flex-column">
+            <table class="table-special">
+                <thead>
+        
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Fecha</th>
+                        <th>Lugar</th>
+                        <th>Categoría</th>
+                    </tr>
+        
+                </thead>
+                <tbody>
+                    {% for event in event_list %}
+                    <tr>
+                        <td>{{ event.name }}</td>
+                        <td>{{ event.startDate|date:'d-m-Y H:i' }}</td>
+                        <td>{{ event.place }}</td>
+                        <td>{{ event.category }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+        
+            </table>
+            {% if event_list.has_other_pages %}
+                <ul class="pagination">
+                    {% if event_list.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ event_list.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+                    {% endif %}
+                    {% for i in event_list.paginator.page_range %}
+                        {% if event_list.number == i %}
+                            <li class="page-item active disabled"><a class="page-link">{{ i }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if event_list.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ event_list.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+     
+    </header>
+       
+{% endblock %}

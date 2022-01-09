@@ -1,0 +1,8 @@
+<div class="main">
+    <form method="POST">
+        {% csrf_token %}
+        ¿Estás seguro de que deseas eliminar esta categoría?
+        <input type="submit" value="Yes" />
+        <a href="/sheet_categories">Cancel </a>
+    </form>
+</div>

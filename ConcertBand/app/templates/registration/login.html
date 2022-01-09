@@ -15,8 +15,8 @@
     {% endif %}
 {% endif %}
 <section class="page-section" id="login">
-    <div class="container">
-        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">inicio de Sesión</h2>
+    <div class="container text-center">
+        <h2 class="page-section-heading text-center text-secondary mb-0">Inicio de Sesión</h2>
                 <!-- Icon Divider-->
                 <div class="divider-custom">
                     <div class="divider-custom-line"></div>
@@ -42,7 +42,5 @@
         </form>
     </div>
 </section>
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">¿Has olvidado tu contraseña?</a></p>
 
 {% endblock %}

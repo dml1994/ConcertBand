@@ -1,0 +1,61 @@
+{% extends "base_generic.html" %}
+
+{% load static %}
+
+{% block content %}
+    <header class="masthead bg-primary text-white text-center">
+        <div class="d-flex align-items-center flex-column">
+            <p class="masthead-subheading font-weight-light">Materiales</p>
+        </div>
+        <div class="d-flex align-items-center flex-column">
+            <table class="table-special">
+                <thead>
+        
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Asignado a</th>
+                    </tr>
+        
+                </thead>
+                <tbody>
+                    {% for material in material_list %}
+                        <tr>
+                            <td>{{ material.name }}</td>
+                            <td>{{ material.category }}</td>
+                            {% if not material.musician %}
+                                <td>Disponible</td>
+                            {% else %}
+                                <td>{{ material.musician }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+               
+            </table>
+            {% if material_list.has_other_pages %}
+                <ul class="pagination">
+                    {% if material_list.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ material_list.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+                    {% endif %}
+                    {% for i in material_list.paginator.page_range %}
+                        {% if material_list.number == i %}
+                            <li class="page-item active disabled"><a class="page-link">{{ i }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if material_list.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ material_list.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+     
+    </header>
+       
+{% endblock %}

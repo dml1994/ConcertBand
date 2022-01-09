@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app import views
+from registry import views as registryViews
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls import include
@@ -23,6 +24,10 @@ from django.conf.urls import include
 urlpatterns = [
     path('',views.index, name='index'),
     path('admin/', admin.site.urls),
+    path('events/',views.events, name='events'),
+    path('materials/',views.materials, name='materials'),
+    path('sheet_categories/', registryViews.sheet_categories, name='sheet_categories'),
+    path('<id>/delete_sheet_category', registryViews.delete_sheet_category, name='delete_sheet_category')
 ]
 
 urlpatterns += staticfiles_urlpatterns()
