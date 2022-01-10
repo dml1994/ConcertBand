@@ -10,6 +10,9 @@
             <p class="masthead-subheading font-weight-light mb-0">Información del compositor</p>
         </div>
         <div class="d-flex align-items-center flex-column">
+            {% if data.photo %}
+                <img src="/media/{{ data.photo }}" alt="Compositor" style="max-height:200px" class="my-2">       
+            {% endif %}
             <table class="table-special">
                 <tbody>
                         <tr>
@@ -23,7 +26,8 @@
                         <tr>
                             <td>Web</td>
                             {% if data.web %}
-                                <td>{{ data.web }}</td>
+                                
+                                <td><a target="_blank" class="btn btn-secondary" href="{{ data.web }}">Ir a la web</a></td>
                             {% else %}
                                 <td>No hay datos sobre la web del compositor</td>
                             {% endif %}

@@ -16,8 +16,8 @@
         
             {{ form.as_p }}
             
-            <input class="btn btn-success" type="submit" value="Crear estilo">
-            <a class="btn btn-secondary" href="/score_genres">Cancelar</a>
+            <input class="btn btn-success mr-2" type="submit" value="Crear estilo">
+            <a class="btn btn-secondary" href="{{request.META.HTTP_REFERER}}">Cancelar</a>
         </form>
      
     </header>

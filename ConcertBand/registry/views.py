@@ -40,7 +40,7 @@ def create_composer(request):
 
     context ={}
 
-    form = forms.ComposerForm(request.POST or None)
+    form = forms.ComposerForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save()
         return HttpResponseRedirect("/composers")
@@ -62,7 +62,7 @@ def update_composer(request, id):
 
     obj = get_object_or_404(models.Composer, id = id)
  
-    form = forms.ComposerForm(request.POST or None, instance = obj)
+    form = forms.ComposerForm(request.POST or None, request.FILES or None, instance = obj)
 
     if form.is_valid():
         form.save()
@@ -208,3 +208,71 @@ def update_sheet_category(request, id):
     context["form"] = form
  
     return render(request, "registry/update_sheet_category.html", context)
+
+# VideoMedia
+
+def video_medias(request):
+    video_medias_all = models.VideoMedia.objects.all().order_by('title')
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(video_medias_all, 5)
+
+    try:
+        video_medias_list = paginator.page(page)
+    except PageNotAnInteger:
+        video_medias_list = paginator.page(1)
+    except EmptyPage:
+        video_medias_list = paginator.page(paginator.num_pages)
+
+    return render(request,'registry/video_medias_list.html',{'video_medias_list': video_medias_list, 'show': len(video_medias_all) > 0})
+
+def delete_video_media(request, id):
+
+    context ={}
+ 
+    obj = get_object_or_404(models.VideoMedia, id = id)
+ 
+    if request.method =="POST":
+       
+        obj.delete()
+      
+        return HttpResponseRedirect("/video_medias")
+ 
+    return render(request, "registry/delete_video_media.html", context)
+
+def create_video_media(request):
+
+    context ={}
+
+    form = forms.VideoMediaForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect("/video_medias")
+ 
+    context['form']= form
+    return render(request, "registry/create_video_media.html", context)
+
+def detail_video_media(request, id):
+
+    context ={}
+
+    context["data"] = models.VideoMedia.objects.get(id = id)
+         
+    return render(request, "registry/detail_video_media.html", context)
+
+def update_video_media(request, id):
+
+    context ={}
+
+    obj = get_object_or_404(models.VideoMedia, id = id)
+ 
+    form = forms.VideoMediaForm(request.POST or None, instance = obj)
+
+    if form.is_valid():
+        form.save()
+        context["data"] = models.VideoMedia.objects.get(id = id)
+        return HttpResponseRedirect("/"+id+"/detail_video_media")
+ 
+    context["form"] = form
+ 
+    return render(request, "registry/update_video_media.html", context)

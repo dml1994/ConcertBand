@@ -31,3 +31,13 @@ class SheetCategoryForm(forms.ModelForm):
         fields = [
             "name"
         ]
+
+class VideoMediaForm(forms.ModelForm):
+ 
+    class Meta:
+        model = VideoMedia
+ 
+        fields = [
+            "title",
+            "url"
+        ]

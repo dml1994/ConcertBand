@@ -1,0 +1,69 @@
+{% extends "base_generic.html" %}
+
+{% load static %}
+
+{% block content %}
+    <header class="masthead bg-primary text-white text-center">
+        <div class="d-flex align-items-center flex-column">
+            <p class="masthead-subheading font-weight-light mb-0">Vídeos</p>
+        </div>
+        
+        <div class="d-flex align-items-center flex-column">
+            <div class="create-button-container">
+                <a class="btn btn-success" href="/create_video_media">Crear nuevo vídeo</a>
+            </div>
+
+            {% if show %}
+                <table class="table-special">
+                    <thead>
+            
+                        <tr>
+                            <th>Título</th>
+                            <th>Acciones</th>
+                        </tr>
+            
+                    </thead>
+                    <tbody>
+                        {% for video_media in video_medias_list %}
+                            <tr>
+                                <td>{{ video_media.title }}</td>
+                                <td>
+                                    <a class="btn btn-info mr-1" href="/{{ video_media.id }}/detail_video_media">Detalles</a>
+                                    <a class="btn btn-warning mr-1" href="/{{ video_media.id }}/update_video_media">Editar</a>
+                                    <a class="btn btn-danger" href="/{{ video_media.id }}/delete_video_media">Eliminar</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                
+                </table>
+            {% else %}
+                <p class="masthead-subheading font-weight-light mb-0">No existen vídeos</p>
+            {% endif %}
+
+            {% if video_medias_list.has_other_pages %}
+                <ul class="pagination">
+                    {% if video_medias_list.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ video_medias_list.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+                    {% endif %}
+                    {% for i in video_medias_list.paginator.page_range %}
+                        {% if video_medias_list.number == i %}
+                            <li class="page-item active disabled"><a class="page-link">{{ i }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if video_medias_list.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ video_medias_list.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+     
+    </header>
+       
+{% endblock %}

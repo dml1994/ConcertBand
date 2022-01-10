@@ -1,0 +1,43 @@
+
+{% extends "base_generic.html" %}
+
+{% load static %}
+
+{% block content %}
+    <header class="masthead bg-primary text-white text-center">
+        
+        <div class="d-flex align-items-center flex-column">
+            <p class="masthead-subheading font-weight-light mb-0">Información del vídeo</p>
+        </div>
+        
+        <div class="d-flex align-items-center flex-column">
+            <iframe 
+                width="560" 
+                height="315" 
+                src="{{ data.url }}"
+                title="YouTube video player"
+                frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                class="my-2">
+            </iframe>
+
+            <table class="table-special">
+                <tbody>
+                        <tr>
+                            <td>Título</td>
+                            <td>{{ data.title }}</td>
+                        </tr>
+                        <tr>
+                            <td>Enlace</td>
+                            <td>{{ data.url }}</td>
+                        </tr>
+                </tbody>           
+            </table>
+            <div class="create-button-container">
+                <a class="btn btn-warning" href="/{{ data.id }}/update_video_media">Editar vídeo</a>
+            </div>
+        </div>
+     
+    </header>
+       
+{% endblock %}

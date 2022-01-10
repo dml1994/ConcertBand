@@ -9,7 +9,7 @@
         <div class="main">
             <form method="POST">
                 {% csrf_token %}
-                <p>¿Estás seguro de que deseas eliminar este estilo?</p>
+                <p>¿Estás seguro de que deseas eliminar este vídeo?</p>
                 <input class="btn btn-danger mr-2" type="submit" value="Eliminar" />
                 <a class="btn btn-secondary" href="{{request.META.HTTP_REFERER}}">Cancelar</a>
             </form>

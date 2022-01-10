@@ -7,12 +7,16 @@ from django.dispatch import receiver
 # Video
 class VideoMedia(models.Model):
 
+    title = models.CharField(max_length=200, 
+        help_text="Ingrese el título del vídeo",
+        verbose_name="Título",
+        null=True)
     url = models.CharField(max_length=200,
         help_text="Ingrese la url de Youtube del vídeo")
 
     def __str__(self):
 
-        return self.url
+        return self.title
     
     class Meta:
         verbose_name = "Grabación de Vídeo"
@@ -68,12 +72,11 @@ class Composer(models.Model):
         verbose_name="Biografía",
         null=True,
         blank=True)
-    photo = models.ImageField(upload_to="composers",
-        help_text="Seleccione una imagen del Compositor",
+    photo = models.FileField(upload_to="composers_photo",
         verbose_name="Fotografía",
         null=True,
         blank=True)
-
+    
     def __str__(self):
 
         return '%s %s' % (self.name, self.surname)

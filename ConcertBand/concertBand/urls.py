@@ -56,6 +56,15 @@ urlpatterns += [
     path('<id>/update_sheet_category', registryViews.update_sheet_category, name='update_sheet_category')
 ]
 
+# Video Media
+urlpatterns += [
+    path('video_medias/', registryViews.video_medias, name='video_medias'),
+    path('<id>/delete_video_media', registryViews.delete_video_media, name='delete_video_media'),
+    path('create_video_media/', registryViews.create_video_media, name='create_video_media'),
+    path('<id>/detail_video_media', registryViews.detail_video_media, name='detail_video_media'),
+    path('<id>/update_video_media', registryViews.update_video_media, name='update_video_media')
+]
+
 urlpatterns += staticfiles_urlpatterns()
 
 # Authentication
