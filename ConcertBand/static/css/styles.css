@@ -1783,6 +1783,13 @@ pre code {
   border-top: 0.25rem solid #dee2e6;
 }
 
+.create-button-container {
+  width: 100%;
+  max-width: 80%;
+  margin-bottom: 0.5rem;
+  text-align: end;
+}
+
 .table-special {
   width: 100%;
   max-width: 80%;
@@ -10596,8 +10603,8 @@ a.text-dark:focus {
 
 @media (min-width: 992px) {
   .masthead {
-    padding-top: calc(4rem + 104px);
-    padding-bottom: 6rem;
+    padding-top: calc(2rem + 104px);
+    padding-bottom: 0;
     min-height: 699px;
   }
   .masthead .masthead-heading {

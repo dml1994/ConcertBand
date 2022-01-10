@@ -1,0 +1,48 @@
+
+{% extends "base_generic.html" %}
+
+{% load static %}
+
+{% block content %}
+    <header class="masthead bg-primary text-white text-center">
+        
+        <div class="d-flex align-items-center flex-column">
+            <p class="masthead-subheading font-weight-light mb-0">Información del compositor</p>
+        </div>
+        <div class="d-flex align-items-center flex-column">
+            <table class="table-special">
+                <tbody>
+                        <tr>
+                            <td>Nombre</td>
+                            <td>{{ data.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Apellidos</td>
+                            <td>{{ data.surname }}</td>
+                        </tr>
+                        <tr>
+                            <td>Web</td>
+                            {% if data.web %}
+                                <td>{{ data.web }}</td>
+                            {% else %}
+                                <td>No hay datos sobre la web del compositor</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td>Biografía</td>
+                            {% if data.biography %}
+                                <td>{{ data.biography }}</td>
+                            {% else %}
+                                <td>No hay datos sobre la biografía del compositor</td>
+                            {% endif %}
+                        </tr>
+                </tbody>           
+            </table>
+            <div class="create-button-container">
+                <a class="btn btn-warning" href="/{{ data.id }}/update_composer">Editar compositor</a>
+            </div>
+        </div>
+     
+    </header>
+       
+{% endblock %}

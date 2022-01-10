@@ -5,12 +5,12 @@
 {% block content %}
     <header class="masthead bg-primary text-white text-center">
         <div class="d-flex align-items-center flex-column">
-            <p class="masthead-subheading font-weight-light mb-0">Categorías de partitura</p>
+            <p class="masthead-subheading font-weight-light mb-0">Compositores</p>
         </div>
         
         <div class="d-flex align-items-center flex-column">
             <div class="create-button-container">
-                <a class="btn btn-success" href="/create_sheet_category">Crear nueva categoría</a>
+                <a class="btn btn-success" href="/create_composer">Crear nuevo compositor</a>
             </div>
 
             {% if show %}
@@ -19,18 +19,20 @@
             
                         <tr>
                             <th>Nombre</th>
+                            <th>Apellidos</th>
                             <th>Acciones</th>
                         </tr>
             
                     </thead>
                     <tbody>
-                        {% for sheet_category in sheet_categories_list %}
+                        {% for composer in composers_list %}
                             <tr>
-                                <td>{{ sheet_category.name }}</td>
+                                <td>{{ composer.name }}</td>
+                                <td>{{ composer.surname }}</td>
                                 <td>
-                                    <a class="btn btn-info mr-1" href="/{{ sheet_category.id }}/detail_sheet_category">Detalles</a>
-                                    <a class="btn btn-warning mr-1" href="/{{ sheet_category.id }}/update_sheet_category">Editar</a>
-                                    <a class="btn btn-danger" href="/{{ sheet_category.id }}/delete_sheet_category">Eliminar</a>
+                                    <a class="btn btn-info mr-1" href="/{{ composer.id }}/detail_composer">Detalles</a>
+                                    <a class="btn btn-warning mr-1" href="/{{ composer.id }}/update_composer">Editar</a>
+                                    <a class="btn btn-danger" href="/{{ composer.id }}/delete_composer">Eliminar</a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -38,25 +40,25 @@
                 
                 </table>
             {% else %}
-                <p class="masthead-subheading font-weight-light mb-0">No existen categorías de partitura</p>
+                <p class="masthead-subheading font-weight-light mb-0">No existen compositores</p>
             {% endif %}
 
-            {% if sheet_categories_list.has_other_pages %}
+            {% if composers_list.has_other_pages %}
                 <ul class="pagination">
-                    {% if sheet_categories_list.has_previous %}
-                        <li class="page-item"><a class="page-link" href="?page={{ sheet_categories_list.previous_page_number }}">&laquo;</a></li>
+                    {% if composers_list.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ composers_list.previous_page_number }}">&laquo;</a></li>
                     {% else %}
                     <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
                     {% endif %}
-                    {% for i in sheet_categories_list.paginator.page_range %}
-                        {% if sheet_categories_list.number == i %}
+                    {% for i in composers_list.paginator.page_range %}
+                        {% if composers_list.number == i %}
                             <li class="page-item active disabled"><a class="page-link">{{ i }}</a></li>
                         {% else %}
                             <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
                         {% endif %}
                     {% endfor %}
-                    {% if sheet_categories_list.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ sheet_categories_list.next_page_number }}">&raquo;</a></li>
+                    {% if composers_list.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ composers_list.next_page_number }}">&raquo;</a></li>
                     {% else %}
                         <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
                     {% endif %}

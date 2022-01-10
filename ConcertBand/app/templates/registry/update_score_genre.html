@@ -1,0 +1,25 @@
+
+{% extends "base_generic.html" %}
+
+{% load static %}
+
+{% block content %}
+    <header class="masthead bg-primary text-white text-center">
+        
+        <div class="d-flex align-items-center flex-column">
+            <p class="masthead-subheading font-weight-light mb-0">Editar estilo</p>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+        
+            {% csrf_token %}
+        
+            {{ form.as_p }}
+            
+            <input class="btn btn-success" type="submit" value="Editar estilo">
+            <a class="btn btn-secondary" href="/score_genres">Cancelar</a>
+        </form>
+     
+    </header>
+       
+{% endblock %}

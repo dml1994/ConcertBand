@@ -5,12 +5,12 @@
 {% block content %}
     <header class="masthead bg-primary text-white text-center">
         <div class="d-flex align-items-center flex-column">
-            <p class="masthead-subheading font-weight-light mb-0">Categorías de partitura</p>
+            <p class="masthead-subheading font-weight-light mb-0">Estilos de obra</p>
         </div>
         
         <div class="d-flex align-items-center flex-column">
             <div class="create-button-container">
-                <a class="btn btn-success" href="/create_sheet_category">Crear nueva categoría</a>
+                <a class="btn btn-success" href="/create_score_genre">Crear nuevo estilo</a>
             </div>
 
             {% if show %}
@@ -24,13 +24,13 @@
             
                     </thead>
                     <tbody>
-                        {% for sheet_category in sheet_categories_list %}
+                        {% for score_genre in score_genres_list %}
                             <tr>
-                                <td>{{ sheet_category.name }}</td>
+                                <td>{{ score_genre.name }}</td>
                                 <td>
-                                    <a class="btn btn-info mr-1" href="/{{ sheet_category.id }}/detail_sheet_category">Detalles</a>
-                                    <a class="btn btn-warning mr-1" href="/{{ sheet_category.id }}/update_sheet_category">Editar</a>
-                                    <a class="btn btn-danger" href="/{{ sheet_category.id }}/delete_sheet_category">Eliminar</a>
+                                    <a class="btn btn-info mr-1" href="/{{ score_genre.id }}/detail_score_genre">Detalles</a>
+                                    <a class="btn btn-warning mr-1" href="/{{ score_genre.id }}/update_score_genre">Editar</a>
+                                    <a class="btn btn-danger" href="/{{ score_genre.id }}/delete_score_genre">Eliminar</a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -38,25 +38,25 @@
                 
                 </table>
             {% else %}
-                <p class="masthead-subheading font-weight-light mb-0">No existen categorías de partitura</p>
+                <p class="masthead-subheading font-weight-light mb-0">No existen estilos de obra</p>
             {% endif %}
 
-            {% if sheet_categories_list.has_other_pages %}
+            {% if score_genres_list.has_other_pages %}
                 <ul class="pagination">
-                    {% if sheet_categories_list.has_previous %}
-                        <li class="page-item"><a class="page-link" href="?page={{ sheet_categories_list.previous_page_number }}">&laquo;</a></li>
+                    {% if score_genres_list.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ score_genres_list.previous_page_number }}">&laquo;</a></li>
                     {% else %}
                     <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
                     {% endif %}
-                    {% for i in sheet_categories_list.paginator.page_range %}
-                        {% if sheet_categories_list.number == i %}
+                    {% for i in score_genres_list.paginator.page_range %}
+                        {% if score_genres_list.number == i %}
                             <li class="page-item active disabled"><a class="page-link">{{ i }}</a></li>
                         {% else %}
                             <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
                         {% endif %}
                     {% endfor %}
-                    {% if sheet_categories_list.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ sheet_categories_list.next_page_number }}">&raquo;</a></li>
+                    {% if score_genres_list.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ score_genres_list.next_page_number }}">&raquo;</a></li>
                     {% else %}
                         <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
                     {% endif %}

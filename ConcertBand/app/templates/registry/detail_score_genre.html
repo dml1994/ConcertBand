@@ -1,0 +1,28 @@
+
+{% extends "base_generic.html" %}
+
+{% load static %}
+
+{% block content %}
+    <header class="masthead bg-primary text-white text-center">
+        
+        <div class="d-flex align-items-center flex-column">
+            <p class="masthead-subheading font-weight-light mb-0">Información del estilo</p>
+        </div>
+        <div class="d-flex align-items-center flex-column">
+            <table class="table-special">
+                <tbody>
+                        <tr>
+                            <td>Nombre</td>
+                            <td>{{ data.name }}</td>
+                        </tr>
+                </tbody>           
+            </table>
+            <div class="create-button-container">
+                <a class="btn btn-warning" href="/{{ data.id }}/update_score_genre">Editar estilo</a>
+            </div>
+        </div>
+     
+    </header>
+       
+{% endblock %}
