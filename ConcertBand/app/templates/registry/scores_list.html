@@ -1,0 +1,77 @@
+{% extends "base_generic.html" %}
+
+{% load static %}
+
+{% block content %}
+    <header class="masthead bg-primary text-white text-center">
+        <div class="d-flex align-items-center flex-column">
+            <p class="masthead-subheading font-weight-light mb-0">Obras</p>
+        </div>
+        
+        <div class="d-flex align-items-center flex-column">
+            <a class="btn btn-success mb-2" href="/create_score">Crear nueva obra</a>
+            {% if show %}
+                    <table class="table-special">
+                    
+                        <thead>
+                
+                            <tr>
+                                <th>Referencia</th>
+                                <th>Título</th>
+                                <th>Compositor(es)</th>
+                                <th>Estilo</th>
+                                <th>Acciones</th>
+                            </tr>
+                
+                        </thead>
+                        <tbody>
+                            {% for score in scores_list %}
+                                <tr>
+                                    <td>{{ score.registry }}</td>
+                                    <td>{{ score.title }}</td>
+                                    <td> 
+                                        {% for composer in score.composers.all %}
+                                            <p class="mb-0">{{ composer }}</p>
+                                        {% endfor %}
+                                    </td>
+                                    <td>{{ score.genre }}</td>
+                                    <td>
+                                        <a class="btn btn-info mr-1" href="/{{ score.id }}/detail_score">Detalles</a>
+                                        <a class="btn btn-warning mr-1" href="/{{ score.id }}/update_score">Editar</a>
+                                        <a class="btn btn-danger" href="/{{ score.id }}/delete_score">Eliminar</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    
+                    </table>
+            {% else %}
+                <p class="masthead-subheading font-weight-light mb-0">No existen obras</p>
+            {% endif %}
+
+            {% if scores_list.has_other_pages %}
+                <ul class="pagination">
+                    {% if scores_list.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ scores_list.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+                    {% endif %}
+                    {% for i in scores_list.paginator.page_range %}
+                        {% if scores_list.number == i %}
+                            <li class="page-item active disabled"><a class="page-link">{{ i }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if scores_list.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ scores_list.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+     
+    </header>
+       
+{% endblock %}

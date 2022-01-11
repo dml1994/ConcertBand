@@ -21,6 +21,7 @@ class VideoMedia(models.Model):
     class Meta:
         verbose_name = "Grabación de Vídeo"
         verbose_name_plural = "Grabaciones de Vídeo"
+        ordering = ("title",)
         
 # Estilo de Obra
 class ScoreGenre(models.Model):
@@ -36,6 +37,7 @@ class ScoreGenre(models.Model):
     class Meta:
         verbose_name = "Estilo de Obra"
         verbose_name_plural = "Estilos de Obra"
+        ordering = ("name",)
         
 
 # Categoria de Partitura
@@ -52,6 +54,7 @@ class SheetCategory(models.Model):
     class Meta:
         verbose_name = "Categoría de Partitura"
         verbose_name_plural = "Categorías de Partitura"
+        ordering = ("name",)
 
 # Compositor
 class Composer(models.Model):
@@ -84,6 +87,8 @@ class Composer(models.Model):
     class Meta:
         verbose_name = "Compositor"
         verbose_name_plural = "Compositores"
+        ordering = ("name","surname")
+
 # Eliminar la foto al borrar el compositor
 @receiver(models.signals.post_delete, sender=Composer)
 def auto_delete_photo_on_delete(sender, instance, **kwargs):
@@ -109,7 +114,7 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
 # Obra Musical
 class Score(models.Model):
 
-    tittle = models.CharField(max_length=200,
+    title = models.CharField(max_length=200,
         help_text="Ingrese el titulo de la Obra",
         verbose_name="Título")
     composers = models.ManyToManyField(Composer,
@@ -139,12 +144,34 @@ class Score(models.Model):
 
     def __str__(self):
 
-        return '%s (%s)' % (self.tittle, self.genre)
+        return '%s (%s)' % (self.title, self.genre)
     
     class Meta:
         verbose_name = "Obra Musical"
         verbose_name_plural = "Obras Musicales"
+        ordering = ("title", "registry")
 
+# Eliminar el archivo al borrar la obra
+@receiver(models.signals.post_delete, sender=Score)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    if instance.mp3:
+        if os.path.isfile(instance.mp3.path):
+            os.remove(instance.mp3.path)
+
+# Eliminar archivo antiguo al modificar el audio
+@receiver(models.signals.pre_save, sender=Score)
+def auto_delete_file_on_change(sender, instance, **kwargs):
+    if not instance.pk:
+        return False
+    try:
+        old_file = Score.objects.get(pk=instance.pk).mp3
+    except Score.DoesNotExist:
+        return False
+
+    new_file = instance.mp3
+    if not old_file == new_file:
+        if os.path.isfile(old_file.path):
+            os.remove(old_file.path)
 
 # Partitura
 class Sheet(models.Model):
@@ -166,6 +193,7 @@ class Sheet(models.Model):
     class Meta:
         verbose_name = "Partitura"
         verbose_name_plural = "Partituras"
+        ordering = ("category","score")
 
 # Eliminar el archivo al borrar la partitura
 @receiver(models.signals.post_delete, sender=Sheet)

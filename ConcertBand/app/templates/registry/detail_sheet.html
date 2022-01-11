@@ -1,0 +1,35 @@
+{% extends "base_generic.html" %} {% load static %} {% block content %}
+<header class="masthead bg-primary text-white text-center pb-2">
+  <div class="d-flex align-items-center flex-column">
+    <p class="masthead-subheading font-weight-light mb-0">
+      Información de la partitura
+    </p>
+  </div>
+  <div class="d-flex align-items-center flex-column">
+    <table class="table-special">
+      <tbody>
+        <tr>
+          <td>Obra</td>
+          <td><p>{{ data.score }}</p>
+            <a class="btn btn-info mr-1" href="/{{ data.score.id }}/detail_score">Ver Obra</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Categoría</td>
+          <td>{{ data.category }}</td>
+        </tr>
+        <tr>
+          <td>Partitura</td>
+          <td><a class="btn btn-secondary mr-1" target="_blank" href="/media/{{ data.pdf }}"
+            >Ver partitura</a</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <a class="btn btn-warning" href="/{{ data.id }}/update_sheet"
+      >Editar partitura</a
+    >
+  </div>
+</header>
+
+{% endblock %}

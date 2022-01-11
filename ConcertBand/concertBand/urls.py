@@ -38,6 +38,15 @@ urlpatterns += [
     path('<id>/update_composer', registryViews.update_composer, name='update_composer')
 ]
 
+# Score
+urlpatterns += [
+    path('scores/', registryViews.scores, name='scores'),
+    path('<id>/delete_score', registryViews.delete_score, name='delete_score'),
+    path('create_score/', registryViews.create_score, name='create_score'),
+    path('<id>/detail_score', registryViews.detail_score, name='detail_score'),
+    path('<id>/update_score', registryViews.update_score, name='update_score')
+]
+
 # Score Genre
 urlpatterns += [
     path('score_genres/', registryViews.score_genres, name='score_genres'),
@@ -45,6 +54,15 @@ urlpatterns += [
     path('create_score_genre/', registryViews.create_score_genre, name='create_score_genre'),
     path('<id>/detail_score_genre', registryViews.detail_score_genre, name='detail_score_genre'),
     path('<id>/update_score_genre', registryViews.update_score_genre, name='update_score_genre')
+]
+
+# Sheet
+urlpatterns += [
+    path('sheets/', registryViews.sheets, name='sheets'),
+    path('<id>/delete_sheet', registryViews.delete_sheet, name='delete_sheet'),
+    path('create_sheet/', registryViews.create_sheet, name='create_sheet'),
+    path('<id>/detail_sheet', registryViews.detail_sheet, name='detail_sheet'),
+    path('<id>/update_sheet', registryViews.update_sheet, name='update_sheet')
 ]
 
 # Sheet Category

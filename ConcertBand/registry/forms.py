@@ -14,6 +14,21 @@ class ComposerForm(forms.ModelForm):
             "photo"
         ]
 
+class ScoreForm(forms.ModelForm):
+ 
+    class Meta:
+        model = Score
+ 
+        fields = [
+            "title",
+            "composers",
+            "genre",
+            "registry",
+            "arrangers",
+            "mp3",
+            "video"
+        ]
+
 class ScoreGenreForm(forms.ModelForm):
  
     class Meta:
@@ -21,6 +36,16 @@ class ScoreGenreForm(forms.ModelForm):
  
         fields = [
             "name"
+        ]
+class SheetForm(forms.ModelForm):
+ 
+    class Meta:
+        model = Sheet
+ 
+        fields = [
+            "pdf",
+            "category",
+            "score"
         ]
 
 class SheetCategoryForm(forms.ModelForm):

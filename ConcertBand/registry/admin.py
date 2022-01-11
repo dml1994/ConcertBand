@@ -70,9 +70,9 @@ class SheetAdmin(admin.ModelAdmin):
 
 # Obra Musical
 class ScoreAdmin(admin.ModelAdmin):
-    list_display = ('tittle','genre','registry')
+    list_display = ('title','genre','registry')
     actions = ['delete_scores']
-    search_fields = ('tittle',)
+    search_fields = ('title',)
     list_filter = ('genre','composers')
 
     @admin.action(description="Elimina las obras seleccionadas")

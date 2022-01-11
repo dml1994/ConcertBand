@@ -7,7 +7,7 @@
     <header class="masthead bg-primary text-white text-center pb-1">
         
         <div class="d-flex align-items-center flex-column">
-            <p class="masthead-subheading font-weight-light mb-0">Editar vídeo</p>
+            <p class="masthead-subheading font-weight-light mb-0">Crear obra</p>
         </div>
 
         <form method="POST" enctype="multipart/form-data">
@@ -16,7 +16,7 @@
         
             {{ form.as_p }}
             
-            <input class="btn btn-success mr-2" type="submit" value="Editar vídeo">
+            <input class="btn btn-success mr-2" type="submit" value="Crear obra">
             <a class="btn btn-secondary" href="{{request.META.HTTP_REFERER}}">Cancelar</a>
         </form>
      

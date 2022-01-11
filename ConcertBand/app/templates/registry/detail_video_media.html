@@ -4,7 +4,7 @@
 {% load static %}
 
 {% block content %}
-    <header class="masthead bg-primary text-white text-center">
+    <header class="masthead bg-primary text-white text-center pb-2">
         
         <div class="d-flex align-items-center flex-column">
             <p class="masthead-subheading font-weight-light mb-0">Información del vídeo</p>
@@ -27,15 +27,11 @@
                             <td>Título</td>
                             <td>{{ data.title }}</td>
                         </tr>
-                        <tr>
-                            <td>Enlace</td>
-                            <td>{{ data.url }}</td>
-                        </tr>
                 </tbody>           
             </table>
-            <div class="create-button-container">
-                <a class="btn btn-warning" href="/{{ data.id }}/update_video_media">Editar vídeo</a>
-            </div>
+            
+            <a class="btn btn-warning" href="/{{ data.id }}/update_video_media">Editar vídeo</a>
+            
         </div>
      
     </header>

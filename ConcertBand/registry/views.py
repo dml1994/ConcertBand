@@ -73,6 +73,88 @@ def update_composer(request, id):
  
     return render(request, "registry/update_composer.html", context)
 
+# Score
+
+def scores(request):
+    scores_all = models.Score.objects.all().order_by('title')
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(scores_all, 5)
+
+    try:
+        scores_list = paginator.page(page)
+    except PageNotAnInteger:
+        scores_list = paginator.page(1)
+    except EmptyPage:
+        scores_list = paginator.page(paginator.num_pages)
+
+    return render(request,'registry/scores_list.html',{'scores_list': scores_list, 'show': len(scores_all) > 0})
+
+def delete_score(request, id):
+
+    context ={}
+ 
+    obj = get_object_or_404(models.Score, id = id)
+ 
+    if request.method =="POST":
+       
+        obj.delete()
+      
+        return HttpResponseRedirect("/scores")
+ 
+    return render(request, "registry/delete_score.html", context)
+
+def create_score(request):
+
+    context ={}
+
+    form = forms.ScoreForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect("/scores")
+ 
+    context['form']= form
+    return render(request, "registry/create_score.html", context)
+
+def detail_score(request, id):
+
+    context ={}
+
+    context["data"] = models.Score.objects.get(id = id)
+
+    sheets_all = models.Sheet.objects.all().filter(score = context["data"])
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(sheets_all, 5)
+
+    try:
+        context["sheets_list"] = paginator.page(page)
+    except PageNotAnInteger:
+        context["sheets_list"] = paginator.page(1)
+    except EmptyPage:
+        context["sheets_list"] = paginator.page(paginator.num_pages)
+
+    context["show"] =  len(sheets_all) > 0
+
+    return render(request, "registry/detail_score.html", context)
+
+def update_score(request, id):
+
+    context ={}
+
+    obj = get_object_or_404(models.Score, id = id)
+ 
+    form = forms.ScoreForm(request.POST or None, request.FILES or None, instance = obj)
+
+    if form.is_valid():
+        form.save()
+        context["data"] = models.Score.objects.get(id = id)
+        return HttpResponseRedirect("/"+id+"/detail_score")
+ 
+    context["form"] = form
+ 
+    return render(request, "registry/update_score.html", context)
+
 # Score Genre
 
 def score_genres(request):
@@ -141,6 +223,75 @@ def update_score_genre(request, id):
  
     return render(request, "registry/update_score_genre.html", context)
 
+# Sheet
+
+def sheets(request):
+    sheets_all = models.Sheet.objects.all().order_by('score')
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(sheets_all, 5)
+
+    try:
+        sheets_list = paginator.page(page)
+    except PageNotAnInteger:
+        sheets_list = paginator.page(1)
+    except EmptyPage:
+        sheets_list = paginator.page(paginator.num_pages)
+
+    return render(request,'registry/sheets_list.html',{'sheets_list': sheets_list, 'show': len(sheets_all) > 0})
+
+def delete_sheet(request, id):
+
+    context ={}
+ 
+    obj = get_object_or_404(models.Sheet, id = id)
+ 
+    if request.method =="POST":
+       
+        obj.delete()
+      
+        return HttpResponseRedirect("/sheets")
+ 
+    return render(request, "registry/delete_sheet.html", context)
+
+def create_sheet(request):
+
+    context ={}
+
+    form = forms.SheetForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect("/sheets")
+ 
+    context['form']= form
+    return render(request, "registry/create_sheet.html", context)
+
+def detail_sheet(request, id):
+
+    context ={}
+
+    context["data"] = models.Sheet.objects.get(id = id)
+         
+    return render(request, "registry/detail_sheet.html", context)
+
+def update_sheet(request, id):
+
+    context ={}
+
+    obj = get_object_or_404(models.Sheet, id = id)
+ 
+    form = forms.SheetForm(request.POST or None, request.FILES or None, instance = obj)
+
+    if form.is_valid():
+        form.save()
+        context["data"] = models.Sheet.objects.get(id = id)
+        return HttpResponseRedirect("/"+id+"/detail_sheet")
+ 
+    context["form"] = form
+ 
+    return render(request, "registry/update_sheet.html", context)
+
+
 # Sheet Category
 
 def sheet_categories(request):
@@ -208,6 +359,7 @@ def update_sheet_category(request, id):
     context["form"] = form
  
     return render(request, "registry/update_sheet_category.html", context)
+
 
 # VideoMedia
 

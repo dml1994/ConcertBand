@@ -1783,15 +1783,7 @@ pre code {
   border-top: 0.25rem solid #dee2e6;
 }
 
-.create-button-container {
-  width: 100%;
-  max-width: 80%;
-  margin-bottom: 0.5rem;
-  text-align: end;
-}
-
 .table-special {
-  width: 100%;
   max-width: 80%;
   margin-bottom: 1rem;
   color: #212529;
@@ -4964,7 +4956,6 @@ input[type="button"].btn-block {
   border-bottom-right-radius: 0.5rem;
 }
 .page-item.active .page-link {
-  z-index: 3;
   color: #fff;
   background-color: #1abc9c;
   border-color: #1abc9c;

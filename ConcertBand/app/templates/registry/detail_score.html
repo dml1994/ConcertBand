@@ -1,0 +1,161 @@
+{% extends "base_generic.html" %} {% load static %} {% block content %}
+<header class="masthead bg-primary text-white text-center pb-2">
+  <div class="d-flex align-items-center flex-column">
+    <p class="masthead-subheading font-weight-light mb-0">
+      Información de la obra
+    </p>
+  </div>
+  <div class="d-flex align-items-center justify-content-center">
+    <div class="mr-5">
+      {% if data.video.all %}
+        {% for video in data.video.all %}
+          <iframe
+            width="560"
+            height="400"
+            src="{{ video.url }}"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            class="my-2"
+          >
+          </iframe>
+        {% endfor %}
+      {% else %} 
+        No se encuentran ningún vídeo de la obra
+      {% endif %}
+    </div>
+    <div class="ml-5">
+      <table class="table-special">
+        <tbody>
+          <tr>
+            <td>Referencia</td>
+            <td>{{ data.registry}}</td>
+          </tr>
+          <tr>
+            <td>Título</td>
+            <td>{{ data.title }}</td>
+          </tr>
+          <tr>
+            <td>Compositor(es)</td>
+            <td>
+              {% for composer in data.composers.all %}
+              <p class="mb-0">{{ composer }}</p>
+              {% endfor %}
+            </td>
+          </tr>
+          <tr>
+            <td>Arreglista(s)</td>
+            <td>
+              {% for arranger in data.arrangers.all %}
+              <p class="mb-0">{{ arranger }}</p>
+              {% endfor %}
+            </td>
+          </tr>
+          <tr>
+            <td>Estilo</td>
+            <td>{{ data.genre }}</td>
+          </tr>
+          <tr>
+            <td>Audio</td>
+            <td>
+              <audio controls>
+                <source src="/media/{{ data.mp3 }}" type="audio/mpeg" />
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <a class="btn btn-warning" href="/{{ data.id }}/update_score"
+        >Editar obra</a
+      >
+    
+    </div>
+    
+  </div>
+  <div class="d-flex align-items-center flex-column">
+    <p class="masthead-subheading font-weight-light mb-0">Partituras de la obra</p>
+  </div>
+
+  <div class="d-flex align-items-center flex-column">
+    <a class="btn btn-success mb-2" href="/create_sheet"
+      >Crear nueva partitura</a
+    >
+
+    {% if show %}
+      <table class="table-special">
+        <thead>
+          <tr>
+            <th>Categoría</th>
+            <th>Partitura</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for sheet in sheets_list %}
+          <tr>
+            <td>{{ sheet.category }}</td>
+            <td><a class="btn btn-secondary mr-1" target="_blank" href="/media/{{ sheet.pdf }}"
+              >Ver partitura</a
+            ></td>
+            <td>
+              <a class="btn btn-info mr-1" href="/{{ sheet.id }}/detail_sheet"
+                >Detalles</a
+              >
+              <a class="btn btn-warning mr-1" href="/{{ sheet.id }}/update_sheet"
+                >Editar</a
+              >
+              <a class="btn btn-danger" href="/{{ sheet.id }}/delete_sheet"
+                >Eliminar</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="masthead-subheading font-weight-light mb-0">
+          No existen partituras
+      </p>
+    {% endif %}
+    
+    {% if sheets_list.has_other_pages %}
+        <ul class="pagination">
+            {% if sheets_list.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ sheets_list.previous_page_number }}"
+                    >&laquo;</a
+                    >
+                </li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+            {% endif %}
+        
+            {% for i in sheets_list.paginator.page_range %}
+                {% if sheets_list.number == i %}
+                    <li class="page-item active disabled">
+                        <a class="page-link">{{ i }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        
+            {% if sheets_list.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ sheets_list.next_page_number }}"
+                    >&raquo;</a
+                    >
+                </li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+  </div>
+</header>
+
+{% endblock %}

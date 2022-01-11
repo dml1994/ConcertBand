@@ -9,34 +9,32 @@
         </div>
         
         <div class="d-flex align-items-center flex-column">
-            <div class="create-button-container">
-                <a class="btn btn-success" href="/create_score_genre">Crear nuevo estilo</a>
-            </div>
-
+            <a class="btn btn-success mb-2" href="/create_score_genre">Crear nuevo estilo</a>
             {% if show %}
-                <table class="table-special">
-                    <thead>
-            
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Acciones</th>
-                        </tr>
-            
-                    </thead>
-                    <tbody>
-                        {% for score_genre in score_genres_list %}
-                            <tr>
-                                <td>{{ score_genre.name }}</td>
-                                <td>
-                                    <a class="btn btn-info mr-1" href="/{{ score_genre.id }}/detail_score_genre">Detalles</a>
-                                    <a class="btn btn-warning mr-1" href="/{{ score_genre.id }}/update_score_genre">Editar</a>
-                                    <a class="btn btn-danger" href="/{{ score_genre.id }}/delete_score_genre">Eliminar</a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
+                    <table class="table-special">
+                    
+                        <thead>
                 
-                </table>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Acciones</th>
+                            </tr>
+                
+                        </thead>
+                        <tbody>
+                            {% for score_genre in score_genres_list %}
+                                <tr>
+                                    <td>{{ score_genre.name }}</td>
+                                    <td>
+                                        <a class="btn btn-info mr-1" href="/{{ score_genre.id }}/detail_score_genre">Detalles</a>
+                                        <a class="btn btn-warning mr-1" href="/{{ score_genre.id }}/update_score_genre">Editar</a>
+                                        <a class="btn btn-danger" href="/{{ score_genre.id }}/delete_score_genre">Eliminar</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    
+                    </table>
             {% else %}
                 <p class="masthead-subheading font-weight-light mb-0">No existen estilos de obra</p>
             {% endif %}

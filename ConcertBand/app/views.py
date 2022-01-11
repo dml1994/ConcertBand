@@ -7,7 +7,7 @@ def index(request):
     return render(request,'index.html')
 
 def events(request):
-    event_all = models.Event.objects.all()
+    event_all = models.Event.objects.all().order_by('name')
 
     page = request.GET.get('page', 1)
     paginator = Paginator(event_all, 5)
@@ -22,7 +22,7 @@ def events(request):
     return render(request,'app/event_list.html',{'event_list': event_list})
 
 def materials(request):
-    material_all = models.Material.objects.all()
+    material_all = models.Material.objects.all().order_by('name')
 
     page = request.GET.get('page', 1)
     paginator = Paginator(material_all, 5)
