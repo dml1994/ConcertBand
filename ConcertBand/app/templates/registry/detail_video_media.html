@@ -6,6 +6,10 @@
 {% block content %}
     <header class="masthead bg-primary text-white text-center pb-2">
         
+        <div class="text-right w-50 d-inline-block">
+            <a class="btn btn-secondary" href="{{request.META.HTTP_REFERER}}">Volver</a>
+        </div>
+        
         <div class="d-flex align-items-center flex-column">
             <p class="masthead-subheading font-weight-light mb-0">Información del vídeo</p>
         </div>

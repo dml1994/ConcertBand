@@ -1,0 +1,73 @@
+{% extends "base_generic.html" %}
+
+{% load static %}
+
+{% block content %}
+    <header class="masthead bg-primary text-white text-center">
+        <div class="d-flex align-items-center flex-column">
+            <p class="masthead-subheading font-weight-light mb-0">Libros de cuentas</p>
+        </div>
+        
+        <div class="d-flex align-items-center flex-column">
+     
+            <a class="btn btn-success mb-2" href="/create_ledger">Crear nuevo libro</a>
+
+
+            {% if show %}
+                <table class="table-special">
+                    <thead>
+            
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Saldo inicial</th>
+                            <th>Saldo actual</th>
+                            <th>Acciones</th>
+                        </tr>
+            
+                    </thead>
+                    <tbody>
+                        {% for ledger in ledgers_list %}
+                            <tr>
+                                <td>{{ ledger.name }}</td>
+                                <td>{{ ledger.initialBalance }} €</td>
+                                <td>{{ ledger.currentBalance}} €</td>
+                                <td>
+                                    <a class="btn btn-info mr-1" href="/{{ ledger.id }}/detail_ledger">Detalles</a>
+                                    <a class="btn btn-warning mr-1" href="/{{ ledger.id }}/update_ledger">Editar</a>
+                                    <a class="btn btn-danger" href="/{{ ledger.id }}/delete_ledger">Eliminar</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                
+                </table>
+            {% else %}
+                <p class="masthead-subheading font-weight-light mb-0">No existen libros de cuentas</p>
+            {% endif %}
+
+            {% if ledgers_list.has_other_pages %}
+                <ul class="pagination">
+                    {% if ledgers_list.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ ledgers_list.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+                    {% endif %}
+                    {% for i in ledgers_list.paginator.page_range %}
+                        {% if ledgers_list.number == i %}
+                            <li class="page-item active disabled"><a class="page-link">{{ i }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if ledgers_list.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ ledgers_list.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+     
+    </header>
+       
+{% endblock %}

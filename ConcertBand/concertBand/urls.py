@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from app import views
 from registry import views as registryViews
+from accounting import views as accountingViews
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls import include
@@ -36,6 +37,33 @@ urlpatterns += [
     path('create_composer/', registryViews.create_composer, name='create_composer'),
     path('<id>/detail_composer', registryViews.detail_composer, name='detail_composer'),
     path('<id>/update_composer', registryViews.update_composer, name='update_composer')
+]
+
+# Entry
+urlpatterns += [
+    path('entries/', accountingViews.entries, name='entries'),
+    path('<id>/delete_entry', accountingViews.delete_entry, name='delete_entry'),
+    path('create_entry/', accountingViews.create_entry, name='create_entry'),
+    path('<id>/detail_entry', accountingViews.detail_entry, name='detail_entry'),
+    path('<id>/update_entry', accountingViews.update_entry, name='update_entry')
+]
+
+# Ledger
+urlpatterns += [
+    path('ledgers/', accountingViews.ledgers, name='ledgers'),
+    path('<id>/delete_ledger', accountingViews.delete_ledger, name='delete_ledger'),
+    path('create_ledger/', accountingViews.create_ledger, name='create_ledger'),
+    path('<id>/detail_ledger', accountingViews.detail_ledger, name='detail_ledger'),
+    path('<id>/update_ledger', accountingViews.update_ledger, name='update_ledger')
+]
+
+# Period
+urlpatterns += [
+    path('periods/', accountingViews.periods, name='periods'),
+    path('<id>/delete_period', accountingViews.delete_period, name='delete_period'),
+    path('create_period/', accountingViews.create_period, name='create_period'),
+    path('<id>/detail_period', accountingViews.detail_period, name='detail_period'),
+    path('<id>/update_period', accountingViews.update_period, name='update_period')
 ]
 
 # Score

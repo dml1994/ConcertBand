@@ -1,0 +1,75 @@
+{% extends "base_generic.html" %}
+
+{% load static %}
+
+{% block content %}
+    <header class="masthead bg-primary text-white text-center">
+        <div class="d-flex align-items-center flex-column">
+            <p class="masthead-subheading font-weight-light mb-0">Entradas</p>
+        </div>
+        
+        <div class="d-flex align-items-center flex-column">
+     
+            <a class="btn btn-success mb-2" href="/create_entry">Crear nueva entrada</a>
+
+
+            {% if show %}
+                <table class="table-special">
+                    <thead>
+            
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Concepto</th>
+                            <th>Cantidad</th>
+                            <th>Saldo final</th>
+                            <th>Acciones</th>
+                        </tr>
+            
+                    </thead>
+                    <tbody>
+                        {% for entry in entries_list %}
+                            <tr>
+                                <td>{{ entry.date|date:'d-m-Y H:i'  }}</td>
+                                <td>{{ entry.concept }}</td>
+                                <td>{{ entry.amount }} €</td>
+                                <td>{{ entry.endBalance}} €</td>
+                                <td>
+                                    <a class="btn btn-info mr-1" href="/{{ entry.id }}/detail_entry">Detalles</a>
+                                    <a class="btn btn-warning mr-1" href="/{{ entry.id }}/update_entry">Editar</a>
+                                    <a class="btn btn-danger" href="/{{ entry.id }}/delete_entry">Eliminar</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                
+                </table>
+            {% else %}
+                <p class="masthead-subheading font-weight-light mb-0">No existen entradas</p>
+            {% endif %}
+
+            {% if entries_list.has_other_pages %}
+                <ul class="pagination">
+                    {% if entries_list.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ entries_list.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+                    {% endif %}
+                    {% for i in entries_list.paginator.page_range %}
+                        {% if entries_list.number == i %}
+                            <li class="page-item active disabled"><a class="page-link">{{ i }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if entries_list.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ entries_list.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+     
+    </header>
+       
+{% endblock %}

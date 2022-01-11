@@ -1,0 +1,25 @@
+
+{% extends "base_generic.html" %}
+
+{% load static %}
+
+{% block content %}
+    <header class="masthead bg-primary text-white text-center pb-1">
+        
+        <div class="d-flex align-items-center flex-column">
+            <p class="masthead-subheading font-weight-light mb-0">Crear nueva entrada</p>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+        
+            {% csrf_token %}
+        
+            {{ form.as_p }}
+            
+            <input class="btn btn-success mr-2" type="submit" value="Crear entrada">
+            <a class="btn btn-secondary" href="{{request.META.HTTP_REFERER}}">Cancelar</a>
+        </form>
+     
+    </header>
+       
+{% endblock %}

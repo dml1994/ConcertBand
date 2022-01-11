@@ -1,0 +1,56 @@
+
+{% extends "base_generic.html" %}
+
+{% load static %}
+
+{% block content %}
+    <header class="masthead bg-primary text-white text-center pb-2">
+        
+        <div class="text-right w-50 d-inline-block">
+            <a class="btn btn-secondary" href="{{request.META.HTTP_REFERER}}">Volver</a>
+        </div>
+        
+        <div class="d-flex align-items-center flex-column">
+            <p class="masthead-subheading font-weight-light mb-0">Información de la entrada</p>
+        </div>
+        <div class="d-flex align-items-center flex-column">
+            <table class="table-special">
+                <tbody>
+                        <tr>
+                            <td>Fecha</td>
+                            <td>{{ data.date|date:'d-m-Y H:i'  }}</td>
+                        </tr>
+                        <tr>
+                            <td>Concepto</td>
+                            <td>{{ data.concept }}</td>
+                        </tr>
+                        <tr>
+                            <td>Cantidad</td>
+                            <td>{{ data.amount }} €</td>
+                        </tr>
+                        <tr>
+                            <td>Saldo Inicial</td>
+                            <td>{{ data.initialBalance }} €</td>
+                        </tr>
+                        <tr>
+                            <td>Saldo final</td>
+                            <td>{{ data.endBalance }} €</td>
+                        </tr>
+                        <tr>
+                            <td>Ejercicio</td>
+                            <td>
+                                <p>{{ data.period }}</p>
+                                <a class="btn btn-info mr-1" href="/{{ data.period.id }}/detail_period">Ver Ejercicio</a>
+                            </td>
+                        </tr>
+                        
+                </tbody>           
+            </table>
+            
+            <a class="btn btn-warning" href="/{{ data.id }}/update_entry">Editar entrada</a>
+            
+        </div>
+     
+    </header>
+       
+{% endblock %}

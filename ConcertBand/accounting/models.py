@@ -27,6 +27,7 @@ class Ledger(models.Model):
     class Meta:
         verbose_name = "Libro de Cuentas"
         verbose_name_plural = "Libros de Cuentas"
+        ordering = ("name",)
 
 # Ejercicio
 class Period(models.Model):
@@ -61,6 +62,7 @@ class Period(models.Model):
     class Meta:
         verbose_name = "Ejercicio"
         verbose_name_plural = "Ejercicios"
+        ordering = ("ledger","name")
 
 # Entrada
 class Entry(models.Model):
@@ -120,4 +122,5 @@ class Entry(models.Model):
     class Meta:
         verbose_name = "Entrada"
         verbose_name_plural = "Entradas"
+        ordering = ("period", "date")
 

@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'bootstrap4',
 ]
 
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
